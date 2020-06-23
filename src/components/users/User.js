@@ -5,16 +5,20 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import Repo from "../Repo/Repo";
 
 export class User extends Component {
   componentDidMount() {
     this.props.getUser(this.props.match.params.login);
+    this.props.getUserRepos(this.props.match.params.login);
   }
 
   static propTypes = {
     loading: PropTypes.bool,
     user: PropTypes.object.isRequired,
     getUser: PropTypes.func.isRequired,
+    getUserRepos: PropTypes.func.isRequired,
+    repo: PropTypes.func.isRequired,
   };
 
   render() {
@@ -36,7 +40,7 @@ export class User extends Component {
 
     console.log({ user: this.props.user });
 
-    const { loading } = this.props;
+    const { loading, repos } = this.props;
 
     if (loading) return <Spinner />;
 
@@ -103,6 +107,7 @@ export class User extends Component {
           <div className="badge badge-danger">Public Repos: {public_repos}</div>
           <div className="badge badge-dark">Public Gist: {public_gists}</div>
         </div>
+        <Repo repos={repos} />
       </Fragment>
     );
   }
