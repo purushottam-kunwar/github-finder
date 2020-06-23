@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Navbar from "./components/layout/Navbar";
 import "./App.css";
 import Users from "./components/users/Users";
+import Search from "./components/users/Search";
 import axios from "axios";
 
 class App extends Component {
@@ -11,7 +12,6 @@ class App extends Component {
   };
 
   async componentDidMount() {
-  
     this.setState({ loading: true });
     const res = await axios.get(
       `https://api.github.com/users?clint_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&clint_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
@@ -26,6 +26,7 @@ class App extends Component {
       <div className="App">
         <Navbar />
         <div className="container">
+          <Search />
           <Users loading={this.state.loading} users={this.state.users} />
         </div>
       </div>
