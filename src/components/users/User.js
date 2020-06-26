@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect, useContext } from "react";
 import Spinner from "../layout/Spinner";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
@@ -8,9 +7,9 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import Repo from "../Repo/Repo";
 import GithubContext from "../../contex/github/githubContext";
 
-const User = ({ getUserRepos, repos, match }) => {
+const User = ({ match }) => {
   const githubContext = useContext(GithubContext);
-  const { getUser, loading, user } = githubContext;
+  const { getUser, loading, user, repos, getUserRepos } = githubContext;
   useEffect(() => {
     getUser(match.params.login);
     getUserRepos(match.params.login);
@@ -101,11 +100,6 @@ const User = ({ getUserRepos, repos, match }) => {
       <Repo repos={repos} />
     </Fragment>
   );
-};
-
-User.propTypes = {
-  getUserRepos: PropTypes.func.isRequired,
-  repo: PropTypes.func.isRequired,
 };
 
 export default User;

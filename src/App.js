@@ -5,27 +5,12 @@ import Users from "./components/users/Users";
 import User from "./components/users/User";
 import Search from "./components/users/Search";
 import Alert from "./components/layout/Alert";
-import axios from "axios";
 import "./App.css";
 import About from "./components/pages/About";
 import GithubState from "./contex/github/GithubState";
 
 const App = () => {
-  const [repos, setRepos] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState(null);
-
-  //get users repo
-  const getUserRepos = async (username) => {
-    setLoading(true);
-
-    const res = await axios.get(
-      `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&clint_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&clint_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-    );
-
-    setRepos(res.data);
-    setLoading(false);
-  };
 
   // Set Alert
   const showAlert = (msg, type) => {
@@ -53,13 +38,7 @@ const App = () => {
                 )}
               ></Route>
               <Route exact path="/about" component={About} />
-              <Route
-                exact
-                path="/user/:login"
-                render={(props) => (
-                  <User {...props} getUserRepos={getUserRepos} repos={repos} />
-                )}
-              />
+              <Route exact path="/user/:login" component={User} />
             </Switch>
           </div>
         </div>
